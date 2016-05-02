@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+    <header>
+      <title>Guess the Color Game</title>
+        <script>
+            var colors=["red", "orange", "yellow" , "green" ,"blue", "black", "purple"];
+            var target_index, variable_count;
+            var txt_ask = "I am thinking of one of these colors:\n\n" + colors.sort(); +"\n\n" + "What color am I thinking of?";
+            var TXT_HIGHER = "Sorry, your guess is not correct!\n\nHint: your color is alphabetically higher than mine.\n\nPlease try again.";
+            var TXT_LOWER = "Sorry, your guess is not correct!\n\nHint: your color is alphabetically lower than mine.\n\nPlease try again.";
+            var TXT_UNRECOGNIZE ="Sorry, I don't recogonize your color.\n\nPlease try again.";
+            var finished;
+            function do_game()
+            {
+
+              target_index = Math.floor(Math.random() * colors.length-1);
+              var color_target = colors[target_index];
+              var guess_input;
+           	  variable_count = 0;
+           	  alert("Target: "+ color_target);
+           	  finished = false;
+               	  while (!finished)
+               	    {
+               	    variable_count++;
+               	    guess_input = prompt(txt_ask, "");
+               	    finished = check_guess(guess_input, color_target);
+                   	}
+            }
+
+            function set_background(color)
+            {
+              var myBody=document.getElementsByTagName("body")[0];
+              myBody.style.background=color;
+            }
+
+            function check_guess(guess_input, color_target)
+            {
+                var index = colors.indexOf(guess_input);
+                if (index < 0){
+
+                    alert(TXT_UNRECOGNIZE);
+                    return false;
+                }
+                else if (guess_input > color_target){
+                    alert(TXT_HIGHER);
+                    return false
+                    }
+                else if (color_target > guess_input)
+                    {
+                    alert(TXT_LOWER);
+                    return false;
+                    }
+                else
+                    {
+                    alert("Congratulations! You have guessed the color!\n\nIt took you " +  variable_count + " guesses to finish the game!\n\nYou can see the colour in the background." );
+                    set_background(color_target);
+                    return true;
+                    }
+                }
+    </script>
+
+    </header>
+<body onload="do_game()"></body>
+</html>
